@@ -1,0 +1,22 @@
+{
+	"name": "pwaTemplate",
+	"description":"The template for pwa" ,
+	"short_name": "pwaTemplate",
+	"start_url" : "./index.html",
+	"id": "./index.html",
+	"scope": "./",
+	"display": "standalone",
+	"theme_color": "#ffffff",
+	"background_color": "#ffffff",
+	"orientation": "any",
+	"icons": [
+		{
+			"src": "./resources/icons/icon.png",
+			"type": "image/png",
+			"sizes": "700x700"
+		}
+	],
+	"launch_handler": {
+		"client_mode": "auto"
+	}
+}
