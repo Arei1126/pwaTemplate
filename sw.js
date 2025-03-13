@@ -7,6 +7,7 @@ const APP_STATIC_RESOURCES = [
 	"./resources/css/css.css",
 	"./resources/scripts/script.js",
 	"./resources/icons/icon.png",
+	"./resources/screenshots/screenshot.jpg"
 ];
 
 self.addEventListener("install", (e) => {  // chashの更新はここで。cache_nameが変わるとここのが読み込まれる

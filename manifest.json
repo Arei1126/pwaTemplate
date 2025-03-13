@@ -18,5 +18,20 @@
 	],
 	"launch_handler": {
 		"client_mode": "auto"
-	}
+	},
+	"screenshots": [
+		{
+			"src": "./resources/screenshots/screenshot.jpg",
+			"sizes": "1080x760",
+			"type": "image/jpeg",
+			"form_factor": "wide",
+			"label": "Home screen showing main navigation and featured content"
+		},
+		{
+			"src": "./resources/screenshots/screenshot.jpg",
+			"sizes": "1080x760",
+			"type": "image/jpeg",
+			"platform": "narrow",
+			"label": "Dashboard view displaying key metrics"
+		}
 }
