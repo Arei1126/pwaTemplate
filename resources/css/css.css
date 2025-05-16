@@ -1,11 +1,4 @@
 body{
-	margin: 0px;
-	overflow: hidden;
-	display: flex;
-	flex-direction: row;
-	align-content: flex-start;
-	justify-content: center;
-	align-items: center;
 }
 
 
