@@ -1,6 +1,7 @@
 `use strict`
 import { ClapDetector } from "./clapDetector.js";
 
+import * as idbHandler from "./idbHandler.js";
 let CurrentSceneNumber = 0;
 
 let InputBuffer = [];
@@ -80,6 +81,7 @@ let Data = TEST_SCORE;
 
 window.addEventListener("load", async ()=>{
 
+	
 
 	const Signal = document.createElement("div");
 
@@ -113,6 +115,9 @@ window.addEventListener("load", async ()=>{
 	const parentP = document.getElementById('parentP');
 	const parentD = document.getElementById('parentD');
 	const closeSetup = document.getElementById("closeSetup");
+	const downloadListParent = document.getElementById("downloadListParent");
+	const downloadListButton = document.getElementById("downloadListButton");
+	const downloadListModal = document.getElementById("downloadListModal");
 
 	// scene1
 	const migiueContainer = document.getElementById('migiue-container');
@@ -172,6 +177,15 @@ window.addEventListener("load", async ()=>{
 			stompSound.play();
 		};
 	});
+
+	downloadListButton.addEventListener("pointerdown",async ()=>{
+		downloadListModal.showModal();
+		await idbHandler.downloadAllJson(downloadListParent);
+	});
+	
+	const date = new Date();
+	const SessionID = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
+	await idbHandler.openOrCreateDatabase(SessionID);
 
 	scoreInput.addEventListener("change", (e)=>{
 		const file = e.target.files[0];
@@ -367,7 +381,7 @@ window.addEventListener("load", async ()=>{
 
 	let sessionDate = null;
 
-	Signal.addEventListener("sceneEnd", ()=>{
+	Signal.addEventListener("sceneEnd", async ()=>{
 		switch (CurrentSceneNumber){
 			case 0:		// これはセットアップ
 				break;
@@ -418,6 +432,8 @@ window.addEventListener("load", async ()=>{
 				ready = false;
 				console.info(Result);
 				console.log(sessionDate);
+				let saveData = {"time:": sessionDate,"result": [...Result]};
+				await idbHandler.saveDataToDatabase(SessionID, saveData);
 				break;
 		}
 	});
@@ -552,7 +568,7 @@ window.addEventListener("load", async ()=>{
 						// ここから回答の記録をしたい
 						if(You){
 							const sectionTime = currentInputTime - SectionStartTime - MeasureLength;  // Youがスタートしてから、いままでの時間
-							const recentInputs = InputBuffer.filter(input => (currentInputTime - input.time) <= sectionTime);
+							const recentInputs = InputBuffer.filter(input => (currentInputTime - input.time) <= sectionTime*1.05);
 
 							for (const input of recentInputs){
 							//for (let i = recentInputs.length -1; i >= 0; i--){
@@ -580,7 +596,7 @@ window.addEventListener("load", async ()=>{
 							const mostRecentInput = InputBuffer[InputBuffer.length-1];
 							
 							if(mostRecentInput){
-								if((currentInputTime - mostRecentInput.time) <= sectionTime){
+								if((currentInputTime - mostRecentInput.time) <= sectionTime*1.05){
 									if( mostRecentInput["type"] == "hittingTable"){
 										answer1Number.appendChild(answerCircle);
 										Result[CurrentQuestionNumber] = 1;
