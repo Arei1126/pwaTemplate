@@ -1,4 +1,113 @@
-body{
+@font-face {
+	font-family: "ayumin";
+	src: url("./JF-Dot-AyuMin18.ttf") format("opentype"),
 }
 
 
+@font-face {
+	font-family: "jiskan16";
+	src: url("./JF-Dot-jiskan16.ttf") format("opentype"),
+}
+
+@font-face {
+	font-family: "dotgothic16";
+	src: url("./DotGothic16-Regular.ttf") format("opentype"),
+}
+
+@font-face {
+	font-family: "jiskan24";
+	src: url("./JF-Dot-jiskan24.ttf") format("opentype"),
+}
+
+@font-face{
+	font-family: "silver";
+	src: url("./Silver.ttf") format("opentype"),
+}
+
+.clapRed{
+	color: red;
+	size: large;
+}
+
+body{
+	font-family: "silver";
+}
+
+.scene{
+	display:none;
+	background-color: gray;
+}
+
+.currentScene{
+	display:block;
+	background-color: white;
+}
+
+canvas.detector {
+    /* 描画エリアの背景色。描画しない部分がこの色になるよ */
+    background-color: #fff; 
+    /* 見やすいように細い枠線をつけてみよ！ */
+    border: 1px solid #000;
+    /* 角をちょっと丸くすると優しい印象になるね */
+    border-radius: 0px;
+    /* ブロック要素にして、上下のマージンとかをコントロールしやすくするよ */
+    display: block; 
+    /* 上下のマージン。必要なら調整してね！ */
+    margin: 10px auto; 
+    /* 配置を中央にするためにautoを使うよ */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* ちょっと影をつけると立体感が出るよ */
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1; /* 開始時は完全に表示 */
+    }
+    100% {
+        opacity: 0; /* 終了時は完全に非表示 */
+        visibility: hidden; /* オプション: 要素を完全に隠してクリックなどを無効にする */
+	display: none;
+    }
+}
+
+.fade-out-after-delay {
+    opacity: 1; /* 最初は表示されている状態にしておく */
+    animation: fadeOut 1s ease-out 0.2s forwards; /* ここがポイント！ */
+    /*
+        animation: [アニメーション名] [再生時間] [イージング] [遅延時間] [終了状態];
+        - fadeOut: 上で定義したアニメーションの名前
+        - 1s: アニメーションの再生時間 (1秒かけてフェードアウト)
+        - ease-out: イージング (最初は速く、徐々にゆっくりになる)
+        - 3s: ★3秒後にアニメーションを開始する！★
+        - forwards: アニメーション終了後も最後の状態 (opacity: 0, visibility: hidden) を維持する
+    */
+}
+
+#detection{
+	background-color: none;
+	color: red;
+	font-weight: bold;
+}
+
+
+ /* 丸付けしたいテキストの親要素に適用するスタイル */
+        .highlight-container {
+            position: relative; /* 子要素の絶対配置の基準にするよ！ */
+            display: inline-block; /* テキストの幅に合わせて要素の幅を調整 */
+            padding: 0 5px; /* テキストと丸の間にちょっと余白 */
+            line-height: 1.2; /* 行の高さを調整して丸が重ならないように */
+        }
+
+        /* 赤い丸の要素のスタイル */
+        .highlight-circle {
+            position: absolute; /* 親要素に対して絶対配置だよ！ */
+            width: 1.5em; /* 丸の幅 */
+            height: 1.5em; /* 丸の高さ */
+            border: 3px solid #ef4444; /* 赤色の太い線で丸を作るよ！ */
+            border-radius: 50%; /* これで完璧な丸になるの！ */
+            top: 50%; /* 親要素のY軸中央に配置 */
+            left: 50%; /* 親要素のX軸中央に配置 */
+            transform: translate(-50%, -50%); /* 中央揃えの微調整 */
+            pointer-events: none; /* 丸をクリックできないようにするよ！ */
+            z-index: 10; /* テキストの上に表示されるように */
+            box-sizing: border-box; /* パディングとボーダーを幅に含める */
+        }

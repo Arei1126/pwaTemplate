@@ -1,0 +1,51 @@
+{
+	"title": "テストテストについてのアンケートのお願い",
+	"instructions": [
+		"リズムxアンケートで拍手か足踏みで回答するアンケートです。", 
+		"あなたのテストテストについての態度を調査してります。", 
+		"所要時間は3分です。"
+	],
+	"closure": [
+		"回答内容を記録しました。",
+		"ご協力ありがとうございました。"
+	],
+	"qandaa":[
+		{
+			"question": "質問1です。はてな？",
+			"answer0": "質問1の答えA",
+			"answer1": "質問1の答えB",	
+			"score":[
+				true, false, false, false,
+				false, false, false, false, 
+				false, false, false, false, 
+				false, false, false, false
+			]
+			
+		},
+		{
+			"question": "質問2です。はてな？",
+			"answer0": "質問2の答えA",
+			"answer1": "質問2の答えB",	
+			"score":[
+				true, false, false, false,
+				true, false, false, false, 
+				false, false, false, false, 
+				false, false, false, false
+			]
+			
+		},	
+		{
+			"question": "質問3です。はてな？",
+			"answer0": "質問3の答えA",
+			"answer1": "質問3の答えB",
+			"score":[
+				true, false, false, false,
+				true, false, false, false, 
+				true, false, false, false, 
+				false, false, false, false
+			]
+			
+		}
+
+	]
+}

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 	<head>
+		<meta charset="UTF-8">
 		<link rel="manifest" href="./manifest.json" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Title</title>
@@ -8,7 +9,92 @@
 	<body>
 		<link type="text/css" rel="stylesheet" href="./resources/css/css.css">
 		<script type="module" src="./resources/scripts/script.js"></script>
+
+
+		<h1 font-font-family:ayumin>👏　👌　　🖐　🖖　👐　👣　🦵　🦿　👠👟　👞
+		♪　♫　♬　🎵　🎶
+			　</h1>
+		<p>おっはー👐</p>
+		<p>あしあと👣</p>
+		<p>おんぷ　えもじ🎵</p>
+
+		<div id="scene0" class="scene">
+			<div class="container">
+				<label for="scoreInput">スコアjson</label>
+				<input type="file" id="scoreInput">
+				<button id="closeSetup">Close Set up</button>
+			</div>
+			<div id="parentC"></div>
+			<div id="parentP"></div>
+			<div id="parentD"></div>
+		</div>
+
+		<div id="scene1" class="scene">
+			<div id="migiue-container">
+				<p>
+				<span id="showtoday"></span><br>
+				経済学部松村研究室<br>
+				Quessio音ire
+				</p>
+			</div>
+			<div id="title-container"></div>
+			<div id="instructions-container"></div>
+			<div id="press-start-container">
+				<p>回答を始めるには拍手を3回して下さい</p>
+				<ol id="clap-icons">
+					<li id="clap-icon1">👐</li>
+					<li id="clap-icon2">👐</li>
+					<li id="clap-icon3">👐</li>
+				</ol>
+
+			</div>
+			<audio src="./resources/assets/btn05.mp3" id="btnSound" display="none"></audio>
+
+		</div>
+
+		<div id="scene2" class="scene">
+			<h1>回答の方法</h1>
+			<video src="./resources/assets/tutorial2.mp4" id="tutorialVideo"></video>
+		</div>
+
+
+		<div id="scene3" class="scene">
+			<div id="inq-instruction">
+				<h2>各質問に該当する答えの入力を行って下さい</h2>
+			</div>
+			<div id="quesionNumber-container"></div>
+			<div id="question-container"></div>
+			<span id="answer0-number" class="highlight-container">1.</span>
+			<div id="answer0-container"></div>
+			<span id="answer1-number" class="highlight-container">2.</span>
+			<div id="answer1-container"></div>
+			<div id="score-container">	
+				<canvas id="scoreCanvas" width="640" height="250"></canvas>
+				<audio display="none" id="music" src="./resources/assets/parappa-base.ogg"></audio>
+				<audio display="none" id="clapSound" src="./resources/assets/crashCymbal2.ogg"></audio>
+				<audio display="none" id="stompSound" src="./resources/assets/middleTom2.ogg"></audio>
+			</div>
+			<div id="inq-closure"></div>
+
+			<div></div>
+		</div>
+		<div id="scene4" class="scene">
+			<div id="closure-container"></div>
+		</div>
 	</body>
+
+	<script>
+		document.getElementById("showtoday").innerHTML = showtoday();
+		function showtoday() {
+					const now = new Date();
+					const month = now.getMonth() + 1;
+					const date = now.getDate();
+					const showtoday = month + "月" + date + "日";
+					return showtoday;
+				}
+	</script>
+
+
 	<script>
 		if ("serviceWorker" in navigator) {
 			navigator.serviceWorker.register("./sw.js").then(
