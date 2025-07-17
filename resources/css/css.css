@@ -31,6 +31,11 @@
 
 body{
 	font-family: "silver";
+	font-size: 4.5em;
+	margin: 1.25em;
+	shape-rendering: crispEdges;
+	text-rendering: optimizeSpeed;
+	font-smooth: never;
 }
 
 .scene{
@@ -90,24 +95,88 @@ canvas.detector {
 
 
  /* 丸付けしたいテキストの親要素に適用するスタイル */
-        .highlight-container {
-            position: relative; /* 子要素の絶対配置の基準にするよ！ */
-            display: inline-block; /* テキストの幅に合わせて要素の幅を調整 */
-            padding: 0 5px; /* テキストと丸の間にちょっと余白 */
-            line-height: 1.2; /* 行の高さを調整して丸が重ならないように */
-        }
+.highlight-container {
+	position: relative; /* 子要素の絶対配置の基準にするよ！ */
+	display: inline-block; /* テキストの幅に合わせて要素の幅を調整 */
+	padding: 0 5px; /* テキストと丸の間にちょっと余白 */
+	line-height: 1.2; /* 行の高さを調整して丸が重ならないように */
+}
 
-        /* 赤い丸の要素のスタイル */
-        .highlight-circle {
-            position: absolute; /* 親要素に対して絶対配置だよ！ */
-            width: 1.5em; /* 丸の幅 */
-            height: 1.5em; /* 丸の高さ */
-            border: 3px solid #ef4444; /* 赤色の太い線で丸を作るよ！ */
-            border-radius: 50%; /* これで完璧な丸になるの！ */
-            top: 50%; /* 親要素のY軸中央に配置 */
-            left: 50%; /* 親要素のX軸中央に配置 */
-            transform: translate(-50%, -50%); /* 中央揃えの微調整 */
-            pointer-events: none; /* 丸をクリックできないようにするよ！ */
-            z-index: 10; /* テキストの上に表示されるように */
-            box-sizing: border-box; /* パディングとボーダーを幅に含める */
-        }
+/* 赤い丸の要素のスタイル */
+.highlight-circle {
+	position: absolute; /* 親要素に対して絶対配置だよ！ */
+	width: 1.5em; /* 丸の幅 */
+	height: 1.5em; /* 丸の高さ */
+	border: 6px solid #ef4444; /* 赤色の太い線で丸を作るよ！ */
+	border-radius: 50%; /* これで完璧な丸になるの！ */
+	top: 50%; /* 親要素のY軸中央に配置 */
+	left: 50%; /* 親要素のX軸中央に配置 */
+	transform: translate(-50%, -50%); /* 中央揃えの微調整 */
+	pointer-events: none; /* 丸をクリックできないようにするよ！ */
+	z-index: 10; /* テキストの上に表示されるように */
+	box-sizing: border-box; /* パディングとボーダーを幅に含める */
+}
+
+#migiue-container{
+	text-align: right;
+}
+
+#title-container{
+	text-align: center;
+}
+
+#clap-icons{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+}
+
+.answer-container{
+	margin-left: 1em;
+}
+
+.score-container{
+	display: flex;
+	justify-content: center;
+}
+
+#scoreCanvas{
+	width: 100%;
+	max-width: 100%;
+}
+
+#tutorialVideo{
+    width: 100%;
+    max-width: 100%;
+    align-self: center;
+    }
+
+
+/*
+#inq-instruction{
+	font-size: 1.5em;
+}
+
+#quesionNumber-container {
+	font-size:1.5em;
+}
+
+#question-container{
+	font-size:1.5em;
+}
+
+.answer-container{
+	font-size:1.5em;
+}
+*/
+#scene3{
+	font-size: 1.5em;
+}
+
+#scene1{
+	font-size:1.5em;
+}
+
+
+

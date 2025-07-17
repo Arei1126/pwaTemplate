@@ -10,6 +10,7 @@
 		<link type="text/css" rel="stylesheet" href="./resources/css/css.css">
 		<script type="module" src="./resources/scripts/script.js"></script>
 
+		<!--
 
 		<h1 font-font-family:ayumin>👏　👌　　🖐　🖖　👐　👣　🦵　🦿　👠👟　👞
 		♪　♫　♬　🎵　🎶
@@ -17,8 +18,10 @@
 		<p>おっはー👐</p>
 		<p>あしあと👣</p>
 		<p>おんぷ　えもじ🎵</p>
+		-->
 
 		<div id="scene0" class="scene">
+			rhytm-q version. 0.0.0
 			<div class="container">
 				<button id="downloadListButton">ダウンロードリスト</button>
 				<dialog id="downloadListModal">
@@ -61,7 +64,7 @@
 
 		<div id="scene2" class="scene">
 			<h1>回答の方法</h1>
-			<video src="./resources/assets/tutorial2.mp4" id="tutorialVideo"></video>
+			<video src="./resources/assets/tutorial1080p.mp4" id="tutorialVideo"></video>
 		</div>
 
 
@@ -69,14 +72,23 @@
 			<div id="inq-instruction">
 				<h2>各質問に該当する答えの入力を行って下さい</h2>
 			</div>
-			<div id="quesionNumber-container"></div>
-			<div id="question-container"></div>
-			<span id="answer0-number" class="highlight-container">1.</span>
-			<div id="answer0-container"></div>
-			<span id="answer1-number" class="highlight-container">2.</span>
-			<div id="answer1-container"></div>
+			<div>
+				<span id="quesionNumber-container"></span>
+				<span id="question-container"></span>
+			</div>
+			<div class="answer-container">
+				<span id="answer0-number" class="highlight-container">👐.</span>
+				<span id="answer0-container"></span>
+			</div>
+			<div class="answer-container">
+				<span id="answer1-number" class="highlight-container">👣.</span>
+				<span id="answer1-container"></span>
+			</div>
+
+
+
 			<div id="score-container">	
-				<canvas id="scoreCanvas" width="640" height="250"></canvas>
+				<canvas id="scoreCanvas" width="1280" height="500"></canvas>
 				<audio display="none" id="music" src="./resources/assets/parappa-base.ogg"></audio>
 				<audio display="none" id="clapSound" src="./resources/assets/crashCymbal2.ogg"></audio>
 				<audio display="none" id="stompSound" src="./resources/assets/middleTom2.ogg"></audio>

@@ -1,5 +1,6 @@
 `use strict`
 import { ClapDetector } from "./clapDetector.js";
+import { TEST_SCORE2 } from "./defaultQuesions.js";
 
 import * as idbHandler from "./idbHandler.js";
 let CurrentSceneNumber = 0;
@@ -10,6 +11,8 @@ const ICON_NOTE = "🎵";
 const ICON_CLAP = "👐";
 const ICON_STOMP = "👣";
 const ICON_VOICE = "?";
+
+const WATCHDOG_TIME = 30 // 30s何もなかったら死んでる
 
 const CLOSURE_WAIT_TIME = 5; // second
 
@@ -58,6 +61,19 @@ const TEST_SCORE = {
 			]
 			
 		},	
+
+		{
+			"question": "あなたは阪大生ですか？",
+			"answer0": "はい",
+			"answer1": "いいえ",
+			"score":[
+				true, false, false, false,
+				false, false, false, false, 
+				true, false, false, false, 
+				false, false, false, false
+			]
+			
+		},	
 		{
 			"question": "最最後の質問問です。はてな？",
 			"answer0": "質問3の答えA",
@@ -74,7 +90,7 @@ const TEST_SCORE = {
 	]
 }
 
-let Data = TEST_SCORE;
+let Data = TEST_SCORE2;
 
 
 
@@ -210,17 +226,7 @@ window.addEventListener("load", async ()=>{
 		}
 	});
 	
-	{
-		const title = document.createElement("p");
-		title.innerText = Data.title;
-		titleContainer.appendChild(title);
 
-	}
-	{
-	const p = document.createElement("p")
-		p.innerHTML = Data.instructions.join("<br>");
-		instructionsContainer.appendChild(p);
-	}
 
 	closeSetup.addEventListener("pointerdown", ()=>{
 		switchScene(1);
@@ -237,13 +243,16 @@ window.addEventListener("load", async ()=>{
 	let You = false;
 
 	const ScoreCtx = scoreCanvas.getContext("2d");
-	
+	ScoreCtx.imageSmoothingEnabled = false;
 	function ScoreBg(canvas, ctx){
 		ctx.fillStyle = "white";
 		ctx.fillRect(0,0,canvas.width, canvas.height);
+		
 		ctx.strokeStyle = "#000000";
+		/*
 		ctx.lineWidth = 1;
 		ctx.strokeRect(0,0,canvas.width,canvas.height);
+		*/
 
 		ctx.beginPath();
 		ctx.lineWidth = 2;
@@ -355,7 +364,7 @@ window.addEventListener("load", async ()=>{
 	}
 
 	function putQA(n){  //data = [問題文, A0. A1]の単純配列
-		quesionNumberContainer.innerText = n+1;
+		quesionNumberContainer.innerText = String(n+1) + ". ";
 		questionContainer.innerText = Data.qandaa[n].question;
 		answer0Container.innerText = Data.qandaa[n].answer0;
 		answer1Container.innerText = Data.qandaa[n].answer1;
@@ -376,16 +385,33 @@ window.addEventListener("load", async ()=>{
 
 	let endTime = null;
 	let ready = false;
-	let QAS = Data["qandaa"];
-	let Result = new Array(QAS.length);
+	let Result = [];
 
 	let sessionDate = null;
+	let QAS = null;
 
+	let sessionStartInputTime = null;
 	Signal.addEventListener("sceneEnd", async ()=>{
 		switch (CurrentSceneNumber){
 			case 0:		// これはセットアップ
+			
 				break;
 			case 1:		// これはメニュー画面	
+
+				QAS = Data["qandaa"];
+				{
+					titleContainer.innerHTML = "";
+					const title = document.createElement("p");
+					title.innerText = Data.title;
+					titleContainer.appendChild(title);
+
+				}
+				{
+					instructionsContainer.innerHTML = "";
+					const p = document.createElement("p")
+					p.innerHTML = Data.instructions.join("<br>");
+					instructionsContainer.appendChild(p);
+				}
 				Result = [];
 				btnSound.addEventListener("ended", ()=>{
 					ready = false;
@@ -402,6 +428,7 @@ window.addEventListener("load", async ()=>{
 				});
 				break;
 			case 3:		// ゲーム画面
+				sessionStartInputTime = clapDetector.Now;
 				const now = new Date();
 				sessionDate = now.toISOString();
 				QAS = Data["qandaa"]
@@ -487,12 +514,20 @@ window.addEventListener("load", async ()=>{
 
 				let w = null;
 				if(q % 2 == 0){
-					w = "Teacher"
+					w = "お手本"
 					You = false;
+					answer0Container.style.color = "lightgray";
+					answer1Container.style.color = "lightgray";
+					answer0Number.style.color = "lightgray";
+					answer1Number.style.color = "lightgray";
 				}
 				else{
-					w = "You";
+					w = "あなた";
 					You = true;
+					answer0Container.style.color = "black";
+					answer1Container.style.color = "black";
+					answer0Number.style.color = "black";
+					answer1Number.style.color = "black";
 				}
 
 				const pos = r/MeasureLength * 3
@@ -506,10 +541,10 @@ window.addEventListener("load", async ()=>{
 				if(pos > 2.5){
 					let w2 = null;
 					if(q % 2 == 0){
-						w2 = "You"
+						w2 = "あなた"
 					}
 					else{
-						w2 = "Teacher";
+						w2 = "お手本";
 					}
 
 					ScoreDrawPosition(scoreCanvas, ScoreCtx, w2, pos-3);
@@ -564,6 +599,16 @@ window.addEventListener("load", async ()=>{
 
 							// prevqn についてのここで回答結果の保存
 						}
+
+						let mostRecentInput = InputBuffer[InputBuffer.length-1];
+						if(!mostRecentInput){
+							mostRecentInput = {"time": sessionStartInputTime};
+						}
+						if(currentInputTime - mostRecentInput["time"] > WATCHDOG_TIME){
+							Result[CurrentQuestionNumber] = -1;
+							switchScene(4);
+						} 
+							
 
 						// ここから回答の記録をしたい
 						if(You){
